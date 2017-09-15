@@ -12,14 +12,23 @@ const handlePOST = (req, res) => {
   return responseBody;
 };
 
+const handleGET = (req, res) => {
+  const query = req.query;
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  res.setHeader('Content-Type', 'application/json');
+  const { method, url } = req;
+  const responseBody = { method, url};
+  if (query.order === '-createdAt') {
+    const reversedResults = results.slice().reverse();
+    responseBody.results = reversedResults;
+  } else {
+    responseBody.results = results;
+  }
 
-
-
-
-
-
-
-
-
+  return responseBody;
+};
 
 exports.handlePOST = handlePOST;
+exports.handleGET = handleGET;
